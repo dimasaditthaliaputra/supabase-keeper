@@ -23,7 +23,7 @@ jobs:
           
           # Melakukan request GET dan menampilkan responnya di console (-v untuk detail)
           # GANTI 'nama_tabel_abel' dengan nama tabel aslimu
-          response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X GET "$URL/rest/v1/users?select=*&limit=1" \
+          response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X GET "$URL/rest/v1/users?select=*&id=eq.1" \
           -H "apikey: $KEY" \
           -H "Authorization: Bearer $KEY")
 
@@ -44,7 +44,7 @@ jobs:
           
           # Melakukan request GET
           # GANTI 'nama_tabel_dimas' dengan nama tabel aslimu
-          response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X GET "$URL/rest/v1/users?select=*&limit=1" \
+          response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X GET "$URL/rest/v1/users?select=*&id=eq.2" \
           -H "apikey: $KEY" \
           -H "Authorization: Bearer $KEY")
 
