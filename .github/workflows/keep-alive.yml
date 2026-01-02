@@ -1,0 +1,52 @@
+name: Supabase Keep Alive (Console Log)
+
+on:
+  schedule:
+  # jalankan 3 hari sekali
+    - cron: '0 0 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping-databases:
+    runs-on: ubuntu-latest
+    steps:
+      # --- PING SERVER 1: ABEL ---
+      - name: Ping Project Inlet (Abel)
+        env:
+          URL: ${{ secrets.SUPABASE_URL_INLET_ABEL }}
+          KEY: ${{ secrets.SUPABASE_KEY_INLET_ABEL }}
+        run: |
+          echo "========================================"
+          echo "🕒 Time: $(date)"
+          echo "🚀 Target: Project Inlet (Abel)"
+          echo "----------------------------------------"
+          
+          # Melakukan request GET dan menampilkan responnya di console (-v untuk detail)
+          # GANTI 'nama_tabel_abel' dengan nama tabel aslimu
+          response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X GET "$URL/rest/v1/users?select=*&limit=1" \
+          -H "apikey: $KEY" \
+          -H "Authorization: Bearer $KEY")
+
+          echo "📄 Response Data: $response"
+          echo "========================================"
+
+      # --- PING SERVER 2: SERVERKU ---
+      - name: Ping Project Inlet (Dimas)
+        if: always()
+        env:
+          URL: ${{ secrets.SUPABASE_URL_INLET_DIMAS }}
+          KEY: ${{ secrets.SUPABASE_KEY_INLET_DIMAS }}
+        run: |
+          echo "========================================"
+          echo "🕒 Time: $(date)"
+          echo "🚀 Target: Project Inlet (Dimas)"
+          echo "----------------------------------------"
+          
+          # Melakukan request GET
+          # GANTI 'nama_tabel_dimas' dengan nama tabel aslimu
+          response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X GET "$URL/rest/v1/users?select=*&limit=1" \
+          -H "apikey: $KEY" \
+          -H "Authorization: Bearer $KEY")
+
+          echo "📄 Response Data: $response"
+          echo "========================================"
